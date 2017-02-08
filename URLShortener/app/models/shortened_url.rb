@@ -14,6 +14,15 @@ class ShortenedUrl < ActiveRecord::Base
   validates :short_url, :long_url, :user_id, presence: true
   validates :short_url, uniqueness: true
 
+  belongs_to :submitter,
+  primary_key: :id,
+  foreign_key: :user_id,
+  class_name: :User
+
+  has_many :visits,
+  primary_key: :id,
+  foreign_key: :short_url_id,
+  class_name: :Visit
 
   def self.random_code
     url = SecureRandom.urlsafe_base64
@@ -24,20 +33,12 @@ class ShortenedUrl < ActiveRecord::Base
   end
 
   def self.shorten(user, long_url)
-    ShortenedUrl.create!(user_id: user.id,
-     long_url: long_url,
-     short_url: ShortenedUrl.random_code
-     )
+    ShortenedUrl.create!(
+      user_id: user.id,
+      long_url: long_url,
+      short_url: ShortenedUrl.random_code
+    )
   end
 
-  belongs_to :submitter,
-    primary_key: :id,
-    foreign_key: :user_id,
-    class_name: :User
-
-  has_many :visits,
-    primary_key: :id,
-    foreign_key: :short_url_id,
-    class_name: :Visit
 
 end
