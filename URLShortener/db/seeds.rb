@@ -12,14 +12,5 @@ user2 = User.create(email: "sendcrudhere@yahoo.com")
 
 ShortenedUrl.destroy_all
 
-ShortenedUrl.create!(
-  short_url: "bit.ly/someth",
-  long_url: "https://somethinglong.com",
-  user_id: user1.id
-)
-
-ShortenedUrl.create!(
-  short_url: "bit.ly/somet2",
-  long_url: "https://somethingelse.com",
-  user_id: user2.id
-)
+ShortenedUrl.shorten(user1, "http://google.com")
+ShortenedUrl.shorten(user2, "https://yahoo.com")
