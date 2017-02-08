@@ -12,5 +12,10 @@ user2 = User.create(email: "sendcrudhere@yahoo.com")
 
 ShortenedUrl.destroy_all
 
-ShortenedUrl.shorten(user1, "http://google.com")
-ShortenedUrl.shorten(user2, "https://yahoo.com")
+short1 = ShortenedUrl.shorten(user1, "http://google.com")
+short2 = ShortenedUrl.shorten(user2, "https://yahoo.com")
+
+Visit.destroy_all
+
+Visit.record_visit!(user1, short2)
+Visit.record_visit!(user2, short1)
