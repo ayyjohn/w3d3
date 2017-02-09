@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
     class_name: :ShortenedUrl
 
   has_many :visited_urls,
+    Proc.new { distinct },
     primary_key: :id,
     foreign_key: :user_id,
     class_name: :Visit

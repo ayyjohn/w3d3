@@ -19,3 +19,10 @@ Visit.destroy_all
 
 Visit.record_visit!(user1, short2)
 Visit.record_visit!(user2, short1)
+Visit.record_visit!(user2, short1)
+
+TagTopic.destroy_all
+
+TagTopic.create!(tag: "Sports")
+TagTopic.create!(tag: "Music")
+TagTopic.create!(tag: "Games")

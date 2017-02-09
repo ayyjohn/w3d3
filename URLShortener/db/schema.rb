@@ -11,19 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208231746) do
+ActiveRecord::Schema.define(version: 20170209014128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "shortened_urls", force: :cascade do |t|
-    t.string  "short_url", null: false
-    t.string  "long_url",  null: false
-    t.integer "user_id",   null: false
+    t.string   "short_url",  null: false
+    t.string   "long_url",   null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "shortened_urls", ["long_url"], name: "index_shortened_urls_on_long_url", using: :btree
   add_index "shortened_urls", ["short_url"], name: "index_shortened_urls_on_short_url", unique: true, using: :btree
+
+  create_table "tag_topics", force: :cascade do |t|
+    t.string   "tag",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tag_topics", ["tag"], name: "index_tag_topics_on_tag", using: :btree
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "url_id",     null: false
+    t.integer  "tag_id",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["url_id"], name: "index_taggings_on_url_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at"
